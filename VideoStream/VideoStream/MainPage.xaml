@@ -4,20 +4,18 @@
              xmlns:controls="clr-namespace:VideoStream.Controls"
              x:Class="VideoStream.MainPage">
 
-    <StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-        </Frame>
-        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
+    <StackLayout VerticalOptions="CenterAndExpand">
 
         <controls:MEVideoView
+                    HeightRequest="350"
                     x:Name="mediaElement"
                     Aspect="AspectFit"
                     HorizontalOptions="Fill"
-                    IsLooping="True"
+
+                    IsLooping="False"
                     IsMuted="True"
                     ShowsPlaybackControls="True"
-                    Source="https://10248bcmediaservice-euwe.streaming.media.azure.net/0ba0b4e5-0c4e-4699-acdd-359fadb4e9e2/cac1204c-bb85-4dbd-bf92-f32c4905.ism/manifest(format=m3u8-aapl)" />
+                    Source="https://10248bcmediaservice-euwe.streaming.media.azure.net/5c8664cf-08d9-4cda-adae-b7f8ef2b2d25/2ef7428b-d308-4230-9b27-7249c936.ism/manifest(format=m3u8-aapl)" />
     </StackLayout>
 
 </ContentPage>
