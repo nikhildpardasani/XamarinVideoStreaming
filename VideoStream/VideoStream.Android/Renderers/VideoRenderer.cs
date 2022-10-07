@@ -33,6 +33,7 @@ namespace VideoStream.Droid.Renderers
         bool isPrepared;
         Context _context;
         AppCompatImageView fullscreenButton;
+        AppCompatImageView volumeButton;
 		static double deviceWidth;
         static double deviceHeight;
         public bool fullScreen;
@@ -94,7 +95,7 @@ namespace VideoStream.Droid.Renderers
 			{
                 _player.Volume = 0;
             }
-			if (!meVideoView.ShowsPlaybackControls)
+            if (!meVideoView.ShowsPlaybackControls)
 			{
                 _playerView.UseController = false;
             }
@@ -105,7 +106,11 @@ namespace VideoStream.Droid.Renderers
             fullscreenButton = _playerView.FindViewById<AppCompatImageView>(Resource.Id.exo_fullscreen_icon);
 
             fullscreenButton.SetOnClickListener(this);
-			meVideoView.VideoExited += MeVideoView_VideoExited;
+
+            volumeButton = _playerView.FindViewById<AppCompatImageView>(Resource.Id.exo_mute_icon);
+
+            volumeButton.SetOnClickListener(this);
+            meVideoView.VideoExited += MeVideoView_VideoExited;
             SetNativeControl(_playerView);
             if (meVideoView.Source is XCT.UriMediaSource uriSource)
             {
@@ -126,29 +131,45 @@ namespace VideoStream.Droid.Renderers
 
 		public void OnClick(Android.Views.View v)
 		{
-			if (fullScreen)
-			{
-                fullscreenButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_fullscreen_open));
-				var window = _context.GetActivity().Window;
-                window.DecorView.SystemUiVisibility = currentState;
-                _context.GetActivity().RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
-                fullScreen = false;
+            if (v.Id == fullscreenButton.Id)
+            {
+                if (fullScreen)
+                {
+                    fullscreenButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_fullscreen_open));
+                    var window = _context.GetActivity().Window;
+                    window.DecorView.SystemUiVisibility = currentState;
+                    _context.GetActivity().RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
+                    fullScreen = false;
+                }
+                else
+                {
+                    fullscreenButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_fullscreen_close));
+                    var window = _context.GetActivity().Window;
+                    var uiOpts = SystemUiFlags.Fullscreen
+                    | SystemUiFlags.HideNavigation
+
+                    | SystemUiFlags.ImmersiveSticky;
+                    currentState = window.DecorView.SystemUiVisibility;
+                    window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOpts;
+                    _context.GetActivity().RequestedOrientation = Android.Content.PM.ScreenOrientation.Sensor;
+
+                    fullScreen = true;
+                }
+                meVideoView.SendFullScreenTapped(fullScreen);
             }
-			else
-			{
-                fullscreenButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_fullscreen_close));
-                var window = _context.GetActivity().Window;
-                var uiOpts = SystemUiFlags.Fullscreen 
-                | SystemUiFlags.HideNavigation 
-                
-                | SystemUiFlags.ImmersiveSticky;
-                currentState = window.DecorView.SystemUiVisibility;
-                window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOpts;
-                _context.GetActivity().RequestedOrientation = Android.Content.PM.ScreenOrientation.Sensor;
-                
-                fullScreen = true;
+            else if (v.Id == volumeButton.Id)
+            {
+                if(_player.Volume == 0)
+                {
+                    _player.Volume = 1;
+                    volumeButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_volume_icon));
+                }
+                else
+                {
+                    _player.Volume = 0;
+                    volumeButton.SetImageDrawable(ContextCompat.GetDrawable(_context, Resource.Drawable.ic_mute_icon));
+                }
             }
-            meVideoView.SendFullScreenTapped(fullScreen);
         }
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
