@@ -11,79 +11,47 @@
 	tools:targetApi="28">
 
 
-	<LinearLayout
+	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="fill_horizontal"
-		android:layout_gravity="center_horizontal"
 		android:paddingTop="4dp"
 		android:orientation="horizontal">
 
-	<LinearLayout
-		android:layout_width="420px"
-		android:layout_height="100px"
-		android:gravity="fill_horizontal"
-		android:layout_gravity="center_horizontal"
-		android:paddingTop="4dp"
-		android:orientation="horizontal"/>
-<!--	<ImageButton
-			android:id="@id/exo_prev"
-			android:visibility="gone"
-			style="@style/ExoMediaButton.Previous"/>
-
-		<ImageButton
-			android:id="@id/exo_rew"
-			android:visibility="gone"
-			style="@style/ExoMediaButton.Rewind"/>
-
-		<ImageButton
-			android:id="@id/exo_repeat_toggle"
-			android:visibility="invisible"
-			style="@style/ExoMediaButton"/>-->
-
 		<ImageButton
 			android:id="@id/exo_play"
-			android:layout_gravity="center_horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
 			android:gravity="center_horizontal"
 			style="@style/ExoMediaButton.Play"/>
 
 		<ImageButton
 			android:id="@id/exo_pause"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
 			android:gravity="center_horizontal"
 			style="@style/ExoMediaButton.Pause"/>
 
 
-<!--		<ImageButton
-			android:id="@id/exo_ffwd"
-			android:visibility="gone"
-			style="@style/ExoMediaButton.FastForward"/>
-
-		<ImageButton
-			android:id="@id/exo_next"
-			android:visibility="gone"
-			style="@style/ExoMediaButton.Next"/>-->
-
-		<FrameLayout
-			android:id="@+id/exo_volume_button"
-			android:layout_width="160dp"
-			android:layout_height="40dp"
-			android:layout_gravity="end">
-
-			<ImageView
+		<ImageView
 				android:id="@+id/exo_mute_icon"
 				android:layout_width="30dp"
 				android:layout_height="30dp"
 				android:layout_marginStart="5px"
+				android:layout_marginTop="10px"
+				android:layout_marginEnd="24px"
+				android:layout_alignParentEnd="true"
 				android:layout_gravity="end"
 				android:adjustViewBounds="true"
 				android:scaleType="fitCenter"
 				android:src="@drawable/ic_mute_icon"/>
 
-		</FrameLayout>
 
-
-	</LinearLayout>
+	</RelativeLayout>
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -122,14 +90,15 @@
 
 		<FrameLayout
 			android:id="@+id/exo_fullscreen_button"
-			android:layout_width="36dp"
-			android:layout_height="36dp"
+			android:layout_width="44dp"
+			android:layout_height="44dp"
+			android:layout_marginRight="10px"
 			android:layout_gravity="right">
 
 			<ImageView
 				android:id="@+id/exo_fullscreen_icon"
-				android:layout_width="30dp"
-				android:layout_height="30dp"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
 				android:layout_gravity="center"
 				android:adjustViewBounds="true"
 				android:scaleType="fitCenter"
